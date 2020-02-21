@@ -2,17 +2,20 @@
   "name": "planning-app",
   "version": "0.1.0",
   "description": "bomb ass project",
-  "author":{
+  "author": {
     "name": "Danielle Osazuwa",
     "email": "danielleosazuwa16@augustana.edu"
   },
-  "keywords": ["react","material-ui"],
+  "keywords": [
+    "react",
+    "material-ui"
+  ],
   "private": true,
   "main": "index.js",
-  "homepage":"",
+  "homepage": "",
   "repository": {
-    "type":"git",
-    "url":"https://github.com/danielleosazuwa16/Planner-Web-App.git"
+    "type": "git",
+    "url": "https://github.com/danielleosazuwa16/Planner-Web-App.git"
   },
   "dependencies": {
     "@babel/core": "7.8.4",
@@ -39,7 +42,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
