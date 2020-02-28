@@ -5,7 +5,7 @@
 export interface Plan {
     name: String,
     dateRange: Date[],
-    data: Goal[] //the actual data to be displayed will be in Goal.planAction
+    data: Goal[] //the actual data to be displayed will be in Goal.planAction.toDo
 }
 
 export interface Goal {
