@@ -24,7 +24,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import clsx from 'clsx';
 import React from 'react';
 
-//based off of material DashBoard template https://material-ui.com/getting-started/templates/dashboard/
+//based off of material Drawer Docs https://material-ui.com/components/drawers/
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
