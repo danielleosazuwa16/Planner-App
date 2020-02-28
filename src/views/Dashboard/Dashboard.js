@@ -1,5 +1,8 @@
+import { makeStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
+import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -13,16 +16,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import CollectionsIcon from '@material-ui/icons/Collections';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import EditIcon from '@material-ui/icons/Edit';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import PersonIcon from '@material-ui/icons/Person';
 import clsx from 'clsx';
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 
+//based off of material DashBoard template https://material-ui.com/getting-started/templates/dashboard/
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -125,15 +127,15 @@ const mainListItems = (
     </ListItem>
 
     <ListItem button>
-      <ListItemIcon> 
-        <AddIcon/>
+      <ListItemIcon>
+        <AddIcon />
       </ListItemIcon>
       <ListItemText primary="Create New Plan" />
     </ListItem>
 
     <ListItem button>
       <ListItemIcon>
-        <EditIcon/>
+        <EditIcon />
       </ListItemIcon>
       <ListItemText primary="Edit Plan" />
     </ListItem>
@@ -141,9 +143,9 @@ const mainListItems = (
     <ListItem button>
       <ListItemIcon>
         {/* <CollectionsIcon/> */}
-        <LibraryBooksIcon/>
+        <LibraryBooksIcon />
       </ListItemIcon>
-      <ListItemText primary="Previous Plans"/>
+      <ListItemText primary="Previous Plans" />
     </ListItem>
   </div>
 );
@@ -152,7 +154,7 @@ const mainListItems = (
 const drawerWidth = 240;
 
 export default function Dashboard() {
-  const classes = useStyles;
+  const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -179,6 +181,9 @@ export default function Dashboard() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>
+          <IconButton color="inherit">
+            <PersonIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -195,9 +200,38 @@ export default function Dashboard() {
         </div>
         <Divider />
         <List>{mainListItems}</List>
+        <Divider />
       </Drawer>
-      
-      
+
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
+          {/* <Grid container spacing={3}>
+            <Grid item xs={12} md={8} lg={9}>
+              <Paper className={fixedHeightPaper}>
+                <Chart />
+              </Paper>
+            </Grid>
+
+            <Grid item xs={12} md={4} lg={3}>
+              <Paper className={fixedHeightPaper}>
+                <Deposits />
+              </Paper>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Orders />
+              </Paper>
+            </Grid>
+          </Grid> */}
+
+          <Box pt={4}>
+            <Copyright />
+          </Box>
+        </Container>
+      </main>
+
     </div>
   );
 }
