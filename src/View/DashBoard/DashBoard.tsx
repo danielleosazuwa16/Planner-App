@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
-import Badge from '@material-ui/core/Badge';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,6 +22,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import PersonIcon from '@material-ui/icons/Person';
 import clsx from 'clsx';
 import React from 'react';
+import './DashBoard.css';
 
 //based off of material Drawer Docs https://material-ui.com/components/drawers/
 function Copyright() {
@@ -123,7 +123,7 @@ const mainListItems = (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="DashBoard" />
     </ListItem>
 
     <ListItem button>
@@ -131,6 +131,9 @@ const mainListItems = (
         <AddIcon />
       </ListItemIcon>
       <ListItemText primary="Create New Plan" />
+      {/* <ListItemText primary = {
+        <Link to="/createPlan"> Create New Plan </Link>
+      }/> */}
     </ListItem>
 
     <ListItem button>
@@ -140,9 +143,9 @@ const mainListItems = (
       <ListItemText primary="Edit Plan" />
     </ListItem>
 
+    {/* or could use <CollectionsIcon/> */}
     <ListItem button>
       <ListItemIcon>
-        {/* <CollectionsIcon/> */}
         <LibraryBooksIcon />
       </ListItemIcon>
       <ListItemText primary="Previous Plans" />

@@ -3,12 +3,14 @@
         The Goals will be the data
 */
 export interface Plan {
+    id: String;
     name: String,
     dateRange: Date[],
     data: Goal[] //the actual data to be displayed will be in Goal.planAction.toDo
 }
 
 export interface Goal {
+    id: String;
     name: String;
     plan: PlanAction[];
     isCompleted: Boolean; 
