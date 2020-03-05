@@ -4,7 +4,7 @@ import { Plan, Goal, PlanAction } from './UserSession';
 import shortid from 'shortid';
 
 function createPlan(
-    name: String,
+    name: string,
     dateRange: Date[],
     data: Goal[]
 ): Plan {
@@ -13,9 +13,9 @@ function createPlan(
 }
 
 function createGoal(
-    name: String,
+    name: string,
     plan: PlanAction[],
-    isCompleted: Boolean
+    isCompleted: boolean
 ): Goal {
     const id = shortid.generate();
     return {id, name, plan, isCompleted};
@@ -23,8 +23,8 @@ function createGoal(
 
 function createPlanAction(
     date: Date,
-    toDo: String,
-    isCompleted: Boolean
+    toDo: string,
+    isCompleted: boolean
 ): PlanAction {
     return {date, toDo, isCompleted}
 }
