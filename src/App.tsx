@@ -1,12 +1,18 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Table from './Components/Table';
 import Dashboard from './View/DashBoard/DashBoard';
+import { Container } from '@material-ui/core';
+import PlanTable from './Components/Table';
 
-function App() {
-  return (
-    <Dashboard></Dashboard>
-  );
+export default class App extends React.Component {
+
+  render() {
+    return (
+      <React.Fragment>
+        <Dashboard/>
+      </React.Fragment>
+    );
+  }
 }
 
-export default App;

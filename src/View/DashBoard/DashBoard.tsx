@@ -21,8 +21,9 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import MenuIcon from '@material-ui/icons/Menu';
 import PersonIcon from '@material-ui/icons/Person';
 import clsx from 'clsx';
-import React from 'react';
+import { default as React } from 'react';
 import './DashBoard.css';
+import PlanTable from './../../Components/Table';
 
 //based off of material Drawer Docs https://material-ui.com/components/drawers/
 function Copyright() {
@@ -153,11 +154,11 @@ const mainListItems = (
   </div>
 );
 
-
 const drawerWidth = 240;
 
-export default function Dashboard() {
+export default function Dashboard(this: any) {
   const classes = useStyles();
+  
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -165,11 +166,13 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
+      <CssBaseline /> 
+      
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -182,7 +185,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+            My Life Is In Shambles
           </Typography>
           <IconButton color="inherit">
             <PersonIcon />
@@ -209,25 +212,9 @@ export default function Dashboard() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          {/* <Grid container spacing={3}>
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
-          </Grid> */}
+      
+          {/*we add the components we want here*/}
+          <PlanTable />
 
           <Box pt={4}>
             <Copyright />
