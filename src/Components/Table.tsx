@@ -3,6 +3,7 @@ import { mockPlan } from './../Data/MockData';
 import { makeStyles } from '@material-ui/core/styles';
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
 import shortid from 'shortid';
+import { Goal } from '../Data/UserSession';
 
 const useStyles = makeStyles({
     table: {
@@ -10,6 +11,16 @@ const useStyles = makeStyles({
     },
 });
 
+function getPlanFor(date: Date, goal: Goal): string {
+    //make this more javascript ish
+    //extract later to some other place
+    for (let i = 0; i < goal.plan.length; i++) {
+        if (goal.plan[i].date === date) {
+            return goal.plan[i].toDo
+        }
+    }
+    return "";
+}
 
 export default function PlanTable() {
     const classes = useStyles();
@@ -28,15 +39,12 @@ export default function PlanTable() {
                 </TableHead>
 
                 <TableBody>
-                    {mockPlan.data.map(row => (
-                        <TableRow key={row.name}>
-                            <TableCell component="th" scope="row">
-                                {row.name}
-                            </TableCell>
-                            <TableCell align="center">{row.name}</TableCell>
-                            <TableCell align="center">{row.name}</TableCell>
-                            <TableCell align="center">{row.name}</TableCell>
-                            <TableCell align="center">{row.name}</TableCell>
+                    {mockPlan.data.map((row, index, goals) => (
+                        <TableRow key={row.id}>
+                            <TableCell component="th" scope="row" align="center">{row.name}</TableCell>
+                            {mockPlan.dateRange.map(date => (
+                                <TableCell key={date.toString()} align="center"> {getPlanFor(date, row)}</TableCell>
+                            ))}
                         </TableRow>
                     ))}
                 </TableBody>
