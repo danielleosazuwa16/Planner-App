@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
-import { mockPlan } from './../Data/MockData';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
-import shortid from 'shortid';
+import React from 'react';
 import { Goal } from '../Data/UserSession';
+import { mockPlan } from './../Data/MockData';
 
 const useStyles = makeStyles({
     table: {
@@ -39,7 +38,7 @@ export default function PlanTable() {
                 </TableHead>
 
                 <TableBody>
-                    {mockPlan.data.map((row, index, goals) => (
+                    {mockPlan.data.map(row => (
                         <TableRow key={row.id}>
                             <TableCell component="th" scope="row" align="center">{row.name}</TableCell>
                             {mockPlan.dateRange.map(date => (
