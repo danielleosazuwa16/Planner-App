@@ -1,5 +1,11 @@
 import shortid from 'shortid';
 
+export interface User {
+    name: String;
+    activePlans: Plan[];
+    previousPlans: Plan[];
+}
+
 export interface Plan {
     id: string;
     name: string;
