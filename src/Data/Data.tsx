@@ -9,6 +9,7 @@ export interface Plan {
 }
 
 export interface Row {
+    id: string;
     date: Date;
     todos: string[];
     completed: boolean[]
@@ -33,16 +34,18 @@ function createRow(date: Date, numGoals: number): Row {
         todos.push("");
         completed.push(false);
     }
-    return {date, todos, completed}
+    const id = shortid.generate();
+    return {id, date, todos, completed}
 }
 
 function getRows(dates: Date[], numGoals: number): Row[] {
     const rows: Row[] = [];
     let row: Row
-    for (let i = 0; i < numGoals; i++) {
+    for (let i = 0; i < dates.length; i++) {
         row = createRow(dates[i], numGoals)
         rows.push(row)
     }
+    console.log(rows)
     return rows;
 }
 
@@ -54,6 +57,7 @@ function getDatesBetween(
     for (let i = firstDate; i <= secondDate; i.setDate(i.getDate() + 1)) {
         arr.push(new Date(i));
     } 
+    
     return arr;
 }
 
