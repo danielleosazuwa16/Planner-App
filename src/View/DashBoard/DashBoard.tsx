@@ -23,7 +23,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import clsx from 'clsx';
 import { default as React } from 'react';
 import './DashBoard.css';
-import PlanTable from './../../Components/Table';
+import PlanTable from './../../Components/MyTable';
+import CreatePlanForm from '../CreatePlan/CreatePlan';
 
 //based off of material Drawer Docs https://material-ui.com/components/drawers/
 function Copyright() {
@@ -132,9 +133,6 @@ const mainListItems = (
         <AddIcon />
       </ListItemIcon>
       <ListItemText primary="Create New Plan" />
-      {/* <ListItemText primary = {
-        <Link to="/createPlan"> Create New Plan </Link>
-      }/> */}
     </ListItem>
 
     <ListItem button>
@@ -149,7 +147,7 @@ const mainListItems = (
       <ListItemIcon>
         <LibraryBooksIcon />
       </ListItemIcon>
-      <ListItemText primary="Previous Plans" />
+      <ListItemText primary="Previous Plans"/>
     </ListItem>
   </div>
 );
@@ -215,6 +213,7 @@ export default function Dashboard(this: any) {
       
           {/*we add the components we want here*/}
           <PlanTable />
+          <CreatePlanForm />
 
           <Box pt={4}>
             <Copyright />

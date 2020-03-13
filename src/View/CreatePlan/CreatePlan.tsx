@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
-import './CreatePlan.css';
+import React from 'react';
+import TextField from '@material-ui/core/TextField';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-class CreatePlan extends Component {
-  // constructor(props){
-    // super(props);
-    // this.state = {};
-  // }
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+        width: 200,
+      },
+    },
+  }),
+);
 
-  // componentWillMount(){}
-  // componentDidMount(){}
-  // componentWillUnmount(){}
+export default function CreatePlanForm() {
+  const classes = useStyles();
 
-  // componentWillReceiveProps(){}
-  // shouldComponentUpdate(){}
-  // componentWillUpdate(){}
-  // componentDidUpdate(){}
+  return (
+    <form className={classes.root} noValidate autoComplete="off">
+      <TextField required id="standard-required" label="Name" defaultValue="" />
+    </form>
 
-  render() {
-    return (
-      <div></div>
-    );
-  }
+    
+  );
 }
-
-export default CreatePlan;

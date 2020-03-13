@@ -1,5 +1,7 @@
+import { Plan } from "./UserSession";
+
 export interface User {
     name: String;
-    // previousPlans: all;
-
+    // activePlans: Plan[];
+    // previousPlans: Plan[];
 }
