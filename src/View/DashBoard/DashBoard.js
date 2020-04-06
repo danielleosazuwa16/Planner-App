@@ -154,7 +154,7 @@ const mainListItems = (
 
 const drawerWidth = 240;
 
-export default function Dashboard(this: any) {
+export default function Dashboard() {
   const classes = useStyles();
   
   const [open, setOpen] = React.useState(true);
