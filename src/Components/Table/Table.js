@@ -1,7 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-import { mockData } from '../Data/Data';
+import { mockData } from '../../Data/Data';
 
 const useStyles = makeStyles({
     table: {

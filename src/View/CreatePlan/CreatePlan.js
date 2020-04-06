@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import DatePicker from '../../Components/DatePicker/DatePicker';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,6 +20,7 @@ export default function CreatePlanForm() {
   return (
     <form className={classes.root} noValidate autoComplete="off">
       <TextField required id="standard-required" label="Name" defaultValue="" />
+      <DatePicker></DatePicker>
     </form>
 
     

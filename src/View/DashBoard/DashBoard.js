@@ -23,7 +23,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import clsx from 'clsx';
 import { default as React } from 'react';
 import './DashBoard.css';
-import PlanTable from '../../Components/Table';
+import PlanTable from '../../Components/Table/Table';
 import CreatePlanForm from '../CreatePlan/CreatePlan';
 
 //based off of material Drawer Docs https://material-ui.com/components/drawers/
