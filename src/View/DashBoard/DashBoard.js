@@ -24,8 +24,8 @@ import clsx from 'clsx';
 import { default as React } from 'react';
 import './DashBoard.css';
 import PlanTable from '../../Components/Table/Table';
-import CreatePlanForm from '../CreatePlan/CreatePlan';
 import CreatePlanDialog from '../CreatePlan/CreatePlanDialog';
+import EditableTable from '../../Components/Table/EditableTable';
 
 //based off of material Drawer Docs https://material-ui.com/components/drawers/
 function Copyright() {
@@ -153,7 +153,7 @@ const drawerWidth = 240;
 export default function Dashboard() {
   const classes = useStyles();
   
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -208,7 +208,7 @@ export default function Dashboard() {
         <Container maxWidth="lg" className={classes.container}>
       
           {/*we add the components we want here*/}
-          {/* <PlanTable /> */}
+          <EditableTable/>
           <Box pt={4}>
             <Copyright />
           </Box>
