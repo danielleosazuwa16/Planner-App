@@ -31,9 +31,9 @@ import EditableTable from '../../Components/Table/EditableTable';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      {'Danielle Osazuwa | '}
+      <Link color="inherit" href="https://github.com/danielleosazuwa16/Planner-App">
+        GitHub
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -131,20 +131,6 @@ const mainListItems = (
 
     <CreatePlanDialog></CreatePlanDialog>
 
-    <ListItem button>
-      <ListItemIcon>
-        <EditIcon />
-      </ListItemIcon>
-      <ListItemText primary="Edit Plan" />
-    </ListItem>
-
-    {/* or could use <CollectionsIcon/> */}
-    <ListItem button>
-      <ListItemIcon>
-        <LibraryBooksIcon />
-      </ListItemIcon>
-      <ListItemText primary="Previous Plans"/>
-    </ListItem>
   </div>
 );
 

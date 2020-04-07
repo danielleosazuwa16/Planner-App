@@ -17,6 +17,9 @@ export default function EditableTable() {
         <div>
             <Button>Add Goal</Button>
             <Button>Delete Goal</Button>
+            <IconButton color="inherit">
+                <DoneIcon />
+            </IconButton>
             <TableContainer component={Paper}>
                 <Table className={classes.table}>
                     <TableHead>
@@ -24,7 +27,6 @@ export default function EditableTable() {
                             {mockData.headers.map(header => (
                                 <TableCell key={header} align="center">{header}</TableCell>
                             ))}
-                            <TableCell align="center">Complete</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -32,21 +34,14 @@ export default function EditableTable() {
                         {mockData.rows.map(row => (
                             <TableRow key={row.id}>
                                 <TableCell component="th" scope="row" align="center">{row.date.toLocaleDateString()}</TableCell>
-                                {row.todos.map((v, i) =>
+                                {console.log(row.todos)}{row.todos.map((v, i) =>
                                     <TableCell key={row.date.toDateString() + i} align="center">
-                                        {/* <TextareaAutosize aria-label="textarea" placeholder={v} /> */}
                                         <InputBase
-                                            // className={classes.input}
+                                            align="center"
                                             placeholder={v}
-                                            // inputProps={{ 'aria-label': 'search google maps' }}
                                         />
                                     </TableCell>
                                 )}
-                                <TableCell align="center">
-                                    <IconButton color="inherit">
-                                        <DoneIcon />
-                                    </IconButton>
-                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

@@ -29,13 +29,14 @@ export function createPlan(
 ){
     const id = shortid.generate();
     const dateRange = getDatesBetween(firstDate, secondDate);
-    const rows = getRows(dateRange, headers.length)
+    const rows = getRows(dateRange, headers.length-1)
     return {id, name, dateRange, headers, rows}
 }
 
 function createRow(date: Date, numGoals: number): Row {
     const todos: string[] = [];
     const completed: boolean[] = [];
+    console.log(numGoals)
     for (let i = 0; i < numGoals; i++) {
         todos.push("");
         completed.push(false);
