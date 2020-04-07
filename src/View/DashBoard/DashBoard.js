@@ -25,6 +25,7 @@ import { default as React } from 'react';
 import './DashBoard.css';
 import PlanTable from '../../Components/Table/Table';
 import CreatePlanForm from '../CreatePlan/CreatePlan';
+import CreatePlanDialog from '../CreatePlan/CreatePlanDialog';
 
 //based off of material Drawer Docs https://material-ui.com/components/drawers/
 function Copyright() {
@@ -128,12 +129,7 @@ const mainListItems = (
       <ListItemText primary="DashBoard" />
     </ListItem>
 
-    <ListItem button>
-      <ListItemIcon>
-        <AddIcon />
-      </ListItemIcon>
-      <ListItemText primary="Create New Plan" />
-    </ListItem>
+    <CreatePlanDialog></CreatePlanDialog>
 
     <ListItem button>
       <ListItemIcon>
@@ -212,9 +208,7 @@ export default function Dashboard() {
         <Container maxWidth="lg" className={classes.container}>
       
           {/*we add the components we want here*/}
-          <PlanTable />
-          <CreatePlanForm />
-
+          {/* <PlanTable /> */}
           <Box pt={4}>
             <Copyright />
           </Box>
