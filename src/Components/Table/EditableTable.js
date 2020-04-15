@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function EditableTable() {
+export default function EditableTable(props) {
     const classes = useStyles();
     return (
         <div>
@@ -33,9 +33,9 @@ export default function EditableTable() {
                     <TableBody>
                         {mockData.rows.map(row => (
                             <TableRow key={row.id}>
-                                <TableCell component="th" scope="row" align="center">{row.date.toLocaleDateString()}</TableCell>
+                                <TableCell component="th" scope="row" align="center">{row.date.toString}</TableCell>
                                 {console.log(row.todos)}{row.todos.map((v, i) =>
-                                    <TableCell key={row.date.toDateString() + i} align="center">
+                                    <TableCell key={row.date.toString + i} align="center">
                                         <InputBase
                                             align="center"
                                             placeholder={v}

@@ -136,10 +136,13 @@ const mainListItems = (
 
 const drawerWidth = 240;
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const classes = useStyles();
   
   const [open, setOpen] = React.useState(false);
+
+  const [ user, previousPlans, activePlan ] = props;
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };

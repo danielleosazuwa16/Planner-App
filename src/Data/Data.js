@@ -9,16 +9,22 @@ export interface User {
 export interface Plan {
     id: string;
     name: string;
-    dateRange: Date[];
     headers: string[]; //our goals
     rows: Row[]; //date and todo 
 }
 
 export interface Row {
     id: string;
-    date: Date;
+    date: SimpleDate;
     todos: string[];
     completed: boolean[]
+}
+
+export interface SimpleDate {
+    day: Number;
+    month: String;
+    year: Number;
+    toString: String;
 }
 
 export function createPlan(
@@ -29,8 +35,8 @@ export function createPlan(
 ){
     const id = shortid.generate();
     const dateRange = getDatesBetween(firstDate, secondDate);
-    const rows = getRows(dateRange, headers.length-1)
-    return {id, name, dateRange, headers, rows}
+    const rows = createRows(dateRange, headers.length-1)
+    return {id, name, headers, rows}
 }
 
 function createRow(date: Date, numGoals: number): Row {
@@ -45,15 +51,34 @@ function createRow(date: Date, numGoals: number): Row {
     return {id, date, todos, completed}
 }
 
-function getRows(dates: Date[], numGoals: number): Row[] {
+function createRows(dates: Date[], numGoals: number): Row[] {
     const rows: Row[] = [];
-    let row: Row
+    let row: Row, simpleDate: SimpleDate;
     for (let i = 0; i < dates.length; i++) {
-        row = createRow(dates[i], numGoals)
-        rows.push(row)
+        date = createSimpleDate(dates[i]);
+        row = createRow(simpleDate, numGoals);
+        rows.push(row);
     }
     console.log(rows)
     return rows;
+}
+
+export function getRow(id: String, plan: Plan) {
+    let i, row;
+    for (i = 0; i < plan.rows.length; i++) {
+        row = plan.rows[i];
+        if (row.id == id) {
+            break;
+        }
+    }
+    return i;
+}
+
+export function createSimpleDate(d: Date): SimpleDate {
+    let date = d.getDate(), month = d.getMonth()+1, year = d.getFullYear();
+    simpleDate = {date, month, year, (month>9 ? '' : '0') + "/" (date>9 ? '' : '0') + "/" + year};
+    console.log(simpleDate)
+    return simpleDate;
 }
 
 function getDatesBetween(
@@ -64,7 +89,6 @@ function getDatesBetween(
     for (let i = firstDate; i <= secondDate; i.setDate(i.getDate() + 1)) {
         arr.push(new Date(i));
     } 
-    
     return arr;
 }
 
