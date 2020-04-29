@@ -3,29 +3,15 @@ import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import AddIcon from '@material-ui/icons/Add';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import EditIcon from '@material-ui/icons/Edit';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
-import MenuIcon from '@material-ui/icons/Menu';
-import PersonIcon from '@material-ui/icons/Person';
-import clsx from 'clsx';
 import { default as React } from 'react';
-import './DashBoard.css';
-import PlanTable from '../../Components/Table/Table';
-import CreatePlanDialog from '../CreatePlan/CreatePlanDialog';
 import EditableTable from '../../Components/Table/EditableTable';
+import CreatePlanDialog from '../CreatePlan/CreatePlanDialog';
+import './DashBoard.css';
 
 //based off of material Drawer Docs https://material-ui.com/components/drawers/
 function Copyright() {
@@ -62,14 +48,7 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
+
   menuButton: {
     marginRight: 36,
   },
@@ -82,7 +61,6 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     position: 'relative',
     whiteSpace: 'nowrap',
-    width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -120,84 +98,48 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const mainListItems = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="DashBoard" />
-    </ListItem>
-
-    <CreatePlanDialog></CreatePlanDialog>
-
-  </div>
-);
-
-const drawerWidth = 240;
-
 export default function Dashboard(props) {
   const classes = useStyles();
-  
-  const [open, setOpen] = React.useState(false);
-
-  const [ user, previousPlans, activePlan ] = props;
-  
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
-      <CssBaseline /> 
-      
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton>
+      <CssBaseline />
+
+      <AppBar>
+        <Toolbar>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             My Life Is In Shambles
           </Typography>
-          <IconButton color="inherit">
-            <PersonIcon />
-          </IconButton>
+
+          <div align="right">
+            {/* Create New Plan */}
+            <IconButton color="inherit">
+              <CreatePlanDialog
+                createPlan={props.handleCreatePlan}
+              />
+            </IconButton>
+            {/* Previous Plans */}
+            <IconButton color="inherit">
+              <LibraryBooksIcon />
+            </IconButton>
+          </div>
+
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-      </Drawer>
 
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-      
+
           {/*we add the components we want here*/}
-          <EditableTable/>
+          <EditableTable
+            plan={props.plan}
+            activePlan={props.activePlan}
+            handleAddGoal={props.handleAddGoal}
+            handleDeleteGoal={props.handleDeleteGoal}
+            hanldeCompleteGoal={props.hanldeCompleteGoal}
+            editPlan={props.editPlan}
+          />
           <Box pt={4}>
             <Copyright />
           </Box>

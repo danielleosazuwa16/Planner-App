@@ -1,33 +1,52 @@
 import DateFnsUtils from '@date-io/date-fns';
-import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import { Chip, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, IconButton, TextField } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import AddIcon from '@material-ui/icons/Add';
+import { Add, Close, Create, Done } from '@material-ui/icons';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import React from 'react';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            listStyle: 'none',
+            padding: theme.spacing(0.5),
+            margin: 0,
             '& .MuiTextField-root': {
                 margin: theme.spacing(1),
                 width: 200,
             },
         },
+        chip: {
+            margin: theme.spacing(0.5),
+        },
     }),
 );
 
-export default function CreatePlanDialog() {
+export default function CreatePlanDialog(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const [name, setName] = React.useState("");
+    const [goals, setGoals] = React.useState([]);
+    const [goal, setGoal] = React.useState("");
     const [startDate, setSelectedStartDate] = React.useState(new Date());
     const [endDate, setSelectedEndDate] = React.useState(new Date());
 
+    const handleDelete = (chipToDelete, i) => () => {
+        const g = Object.assign(goals);
+        g.splice(i, 1);
+        setGoals(g);
+    };
+
+    const addGoal = () => {
+        const g = Object.assign(goals);
+        g.push(goal);
+        setGoals(g);
+        setGoal("");
+        console.log(goals)
+    }
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -35,6 +54,11 @@ export default function CreatePlanDialog() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleCreate = () => {
+        props.createPlan(name, goals, startDate, endDate);
+        handleClose();
+    }
 
     const setStartDate = date => {
         setSelectedStartDate(date);
@@ -44,20 +68,33 @@ export default function CreatePlanDialog() {
         setSelectedEndDate(date);
     }
 
+    const keyPress = (e) => {
+        if (e.keyCode === 13) {
+            console.log('value', e.target.value);
+            addGoal();
+        } else {
+            setGoal(e.target.value)
+        }
+       
+    }
+
     return (
         <div>
-            <ListItem button onClick={handleClickOpen}>
-                <ListItemIcon>
-                    <AddIcon />
-                </ListItemIcon>
-                <ListItemText primary="Create New Plan" />
-            </ListItem>
+            <IconButton color="inherit" onClick={handleClickOpen}>
+                <Create />
+            </IconButton>
+            <Divider />
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id='form-dialog-title'>Create New Plan</DialogTitle>
                 <DialogContent>
                     <form className={classes.root} noValidate autoComplete="off">
                         <Grid item>
-                            <TextField required id="plan-name" label="Plan Name" defaultValue="" />
+                            <TextField
+                                required
+                                id="plan-name"
+                                label="Plan Name"
+                                value={name}
+                                onChange={e => { setName(e.value.target) }} />
                         </Grid>
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <Grid container>
@@ -89,15 +126,37 @@ export default function CreatePlanDialog() {
                                 />
                             </Grid>
                         </MuiPickersUtilsProvider>
+
+                        <div component="ul" className={classes.root}>
+                            {goals.map((data, i) => {
+                                return (
+                                    <li key={i}>
+                                        <Chip
+                                            label={data}
+                                            onDelete={() => handleDelete(data, i)}
+                                            className={classes.chip}
+                                        />
+                                    </li>
+                                );
+                            })}
+                        </div>
+
+                        <br />
                         <Grid>
-                            <TextField id="goal-textfield" label="New Goal" />
-                            <Button variant="contained" color="primary"> Add Goal </Button>
+                            <TextField id="goalTextfield" label="Add Goal" value={goal} onChange={e => keyPress(e)} />
+                            <IconButton onClick={() => addGoal()}>
+                                <Add />
+                            </IconButton>
                         </Grid>
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" onClick={handleClose} color="primary">Cancel</Button>
-                    <Button variant="contained" onClick={handleClose} color="primary">Create</Button>
+                    <IconButton onClick={handleClose}>
+                        <Close />
+                    </IconButton>
+                    <IconButton onClick={handleCreate}>
+                        <Done />
+                    </IconButton>
                 </DialogActions>
             </Dialog>
         </div>
