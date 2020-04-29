@@ -1,6 +1,6 @@
 import { FormControl, IconButton, Input, InputLabel, MenuItem, Paper, Popover, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Add, DeleteOutline, Done, StrikethroughS } from '@material-ui/icons';
+import { Add, DeleteOutline, Done, StrikethroughS, SaveAltSharp } from '@material-ui/icons';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,10 +24,10 @@ export default function EditableTable(props) {
     const classes = useStyles();
 
     // Add Popover
+    const [goalToAdd, setGoalToAdd] = React.useState("");
     const [addAnchorEl, setAddAnchorEl] = React.useState(null);
     const openAdd = Boolean(addAnchorEl);
     const addId = openAdd ? 'add-popover' : undefined;
-    let g = "", invalidInput = false;
     const handleClickAdd = (event) => {
         console.log("clicked")
         setAddAnchorEl(event.currentTarget);
@@ -38,7 +38,7 @@ export default function EditableTable(props) {
     };
 
     const handleAdd = () => {
-        props.handleAddGoal(g);
+        props.handleAddGoal(goalToAdd);
         handleCloseAdd();
     }
 
@@ -72,7 +72,6 @@ export default function EditableTable(props) {
 
     return (
         <div>
-
             <div align="right" >
                 {/* Complete Goal */}
                 <IconButton onClick={handleClickCom} >
@@ -98,10 +97,14 @@ export default function EditableTable(props) {
                     }}>
                     <form noValidate autoComplete="off" className={classes.formControl}>
                         <TextField
-                            value={g}
-                            error={invalidInput}
+                            value={goalToAdd}
                             label="New Goal"
-                            helperText="Must be less than 15 chars"
+                            onChange={e => setGoalToAdd(e.target.value)}
+                            onKeyDown={e => {
+                                if (e.keyCode === 13 && e.shiftKey === false) {
+                                    handleAdd()
+                                }
+                            }}
                         />
                         <IconButton onclick={handleAdd}>
                             <Done />
@@ -141,6 +144,10 @@ export default function EditableTable(props) {
                         </IconButton>
                     </FormControl>
                 </Popover>
+
+                <IconButton onClick={props.finishPlan}>
+                    <SaveAltSharp />
+                </IconButton>
             </div>
 
             <TableContainer component={Paper}>
@@ -163,7 +170,7 @@ export default function EditableTable(props) {
                                             disableUnderline={true}
                                             className={classes.textField}
                                             align="center"
-                                            value={v}
+                                            value={(row.completed[i]) ? v.strike() : v}
                                             onChange={e => props.editPlan(e.target.value, rowIndex, i)}
                                         />
                                     </TableCell>

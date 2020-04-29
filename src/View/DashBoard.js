@@ -1,17 +1,10 @@
 import { makeStyles } from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
-import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import { AppBar, Box, Container, CssBaseline, IconButton, Link, Toolbar, Typography } from '@material-ui/core';
+import { LibraryBooks, DashboardSharp } from '@material-ui/icons';
 import { default as React } from 'react';
-import EditableTable from '../../Components/Table/EditableTable';
-import CreatePlanDialog from '../CreatePlan/CreatePlanDialog';
-import './DashBoard.css';
+import EditableTable from '../Components/EditableTable';
+import CreatePlanDialog from './CreatePlanDialog';
+import PreviousPlans from './PreviousPlans.js';
 
 //based off of material Drawer Docs https://material-ui.com/components/drawers/
 function Copyright() {
@@ -48,7 +41,6 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
-
   menuButton: {
     marginRight: 36,
   },
@@ -96,10 +88,26 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 240,
   },
+  footer: {
+    position: 'fixed',
+    height: 50,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    marginBottom: 20,
+  }, 
+  body: {
+    marginButtom: 70
+  }
 }));
 
 export default function Dashboard(props) {
   const classes = useStyles();
+  const [showPrev, setShowPrev] = React.useState(false);
+
+  const showPrevious = () => {
+    setShowPrev(true);
+  }
 
   return (
     <div className={classes.root}>
@@ -119,8 +127,13 @@ export default function Dashboard(props) {
               />
             </IconButton>
             {/* Previous Plans */}
-            <IconButton color="inherit">
-              <LibraryBooksIcon />
+            <IconButton color="inherit" onClick={() => setShowPrev(true)}>
+              <LibraryBooks />
+            </IconButton>
+
+            {/* Active Plans */}
+            <IconButton color="inherit" onClick={() => setShowPrev(false)}>
+              <DashboardSharp />
             </IconButton>
           </div>
 
@@ -130,17 +143,23 @@ export default function Dashboard(props) {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
+          <Container className={classes.body}>
+            {!showPrev && props.plan && <EditableTable
+              plan={props.plan}
+              activePlan={props.activePlan}
+              handleAddGoal={props.handleAddGoal}
+              handleDeleteGoal={props.handleDeleteGoal}
+              hanldeCompleteGoal={props.hanldeCompleteGoal}
+              editPlan={props.editPlan}
+              finishPlan={props.finishPlan}
+            />}
 
-          {/*we add the components we want here*/}
-          <EditableTable
-            plan={props.plan}
-            activePlan={props.activePlan}
-            handleAddGoal={props.handleAddGoal}
-            handleDeleteGoal={props.handleDeleteGoal}
-            hanldeCompleteGoal={props.hanldeCompleteGoal}
-            editPlan={props.editPlan}
-          />
-          <Box pt={4}>
+            {showPrev && <PreviousPlans
+              previousPlans={props.previousPlans}
+            />}
+          </Container>
+
+          <Box pt={4} className={classes.footer}>
             <Copyright />
           </Box>
         </Container>

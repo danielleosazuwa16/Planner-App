@@ -1,8 +1,8 @@
 import { Container } from '@material-ui/core';
 import React from 'react';
 import './App.css';
-import { createPlan, getRow, mockData, Plan, Row } from './Data/Data';
-import Dashboard from './View/DashBoard/DashBoard';
+import { createPlan, getRow, mockData, mock1Data, mock2Data, Plan, Row } from './Data/Data';
+import Dashboard from './View/DashBoard';
 
 export default class App extends React.Component {
 
@@ -10,21 +10,21 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       user: "Danielle Osazuwa",
-      previousPlans: [],
+      previousPlans: [mockData, mock1Data, mock2Data],
       activePlan: mockData
     };
 
-    if (localStorage.getItem('planSessionState') === null) {
-      this.storeSession();
-    } else {
-      let st = localStorage.getItem('planSessionState');
-      st = JSON.parse(st);
-      this.state = {
-        user: st.user,
-        previousPlans: st.previousPlans,
-        activePlan: st.activePlan
-      }
-    }
+    // if (localStorage.getItem('planSessionState') === null) {
+    //   this.storeSession();
+    // } else {
+    //   let st = localStorage.getItem('planSessionState');
+    //   st = JSON.parse(st);
+    //   this.state = {
+    //     user: st.user,
+    //     previousPlans: st.previousPlans,
+    //     activePlan: st.activePlan
+    //   }
+    // }
   }
 
   storeSession = () => {
@@ -51,22 +51,22 @@ export default class App extends React.Component {
   /**
    * 
    */
-  handleDeleteGoal = (toDo: string) => {
-    let i, newPlan: Plan = JSON.parse(JSON.stringify(this.state.activePlan)),
-      rows: Row[] = newPlan.rows; //copy the plan
-    newPlan.headers.push(toDo);
-
-    for (i = 0; i < rows[0].todos.length; i++) {
-      if (rows[0].todos[i] === toDo) {
+  handleDeleteGoal = (goal: string) => {
+    let i, newPlan: Plan = JSON.parse(JSON.stringify(this.state.activePlan));
+    console.log(newPlan)
+    for (i = 0; i < newPlan.headers.length; i++) {
+      if (newPlan.headers[i] === goal) {
+        newPlan.headers.splice(i,1);
         break;
       }
     }
-
-    for (let j = 0; j < rows.length; j++) {
-      let row = rows[j];
-      row.completed.splice(i, 1);
-      row.todos.splice(i, 1);
+   
+    for (let j = 0; j < newPlan.rows.length; j++) {
+      newPlan.rows[j].completed.splice(i, 1);
+      newPlan.rows[j].todos.splice(i, 1);
     }
+
+    
 
     this.setState({ activePlan: newPlan });
     this.storeSession();
@@ -100,6 +100,7 @@ export default class App extends React.Component {
   }
 
   handleCreatePlan = (name: String, headers: Date[], startDate: Date, endDate: Date) => {
+    headers.unshift("Date");
     const newPlan: Plan = createPlan(name, startDate, endDate, headers);
     let prevActive = JSON.parse(JSON.stringify(this.state.activePlan)),
       prevPlans: Plan[] = this.state.previousPlans;
@@ -109,11 +110,21 @@ export default class App extends React.Component {
     this.storeSession();
   }
 
-  editPlan = (text, rowIndex, index ) => {
+  editPlan = (text, rowIndex, index) => {
     const newPlan: Plan = JSON.parse(JSON.stringify(this.state.activePlan));
     newPlan.rows[rowIndex].todos[index] = text;
     console.log(newPlan.rows[rowIndex].todos[index]);
     this.setState({ activePlan: newPlan });
+    this.storeSession();
+  }
+
+  finishPlan = () => {
+    let s = JSON.parse(JSON.stringify(this.state.previousPlans));
+    s.push(this.state.activePlan);
+    this.setState({
+      activePlan: false,
+      previousPlans: s,
+    });
     this.storeSession();
   }
 
@@ -131,6 +142,7 @@ export default class App extends React.Component {
             handleCompleteGoal={this.handleCompleteGoal}
             handleCreatePlan={this.handleCreatePlan}
             editPlan={this.editPlan}
+            finishPlan={this.finishPlan}
           />
         </Container>
       </React.Fragment>

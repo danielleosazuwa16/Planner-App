@@ -91,5 +91,7 @@ function getDatesBetween(
 const headers: string[] = ["Date", "Robot Tracker", "SI Individual Project", "Learn Hooks", "CSC 320", "Packing"];
 
 export const mockData: Plan = createPlan("College Week 4", new Date(2020, 3, 2), new Date(2020, 3, 6), headers);
+export const mock1Data: Plan = createPlan("College Week 5", new Date(2020, 3, 2), new Date(2020, 3, 6), headers);
+export const mock2Data: Plan = createPlan("College Week 6", new Date(2020, 3, 2), new Date(2020, 3, 6), headers);
 
 export const mockSession: User = { name: "Danielle", activePlans: mockData, previousPlans: [] }

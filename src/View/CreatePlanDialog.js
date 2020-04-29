@@ -8,22 +8,30 @@ import React from 'react';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
+            '& .MuiTextField-root': {
+                margin: theme.spacing(1),
+                width: 200,
+            },
+        },
+        chipStyle: {
             display: 'flex',
             justifyContent: 'center',
             flexWrap: 'wrap',
             listStyle: 'none',
             padding: theme.spacing(0.5),
             margin: 0,
-            '& .MuiTextField-root': {
-                margin: theme.spacing(1),
-                width: 200,
-            },
         },
         chip: {
             margin: theme.spacing(0.5),
         },
     }),
 );
+
+function useForceUpdate() {
+    const [value, setValue] = React.useState(0); 
+    return () => setValue(value => ++value);
+}
+
 
 export default function CreatePlanDialog(props) {
     const classes = useStyles();
@@ -33,11 +41,13 @@ export default function CreatePlanDialog(props) {
     const [goal, setGoal] = React.useState("");
     const [startDate, setSelectedStartDate] = React.useState(new Date());
     const [endDate, setSelectedEndDate] = React.useState(new Date());
+    const forceUpdate = useForceUpdate();
 
     const handleDelete = (chipToDelete, i) => () => {
         const g = Object.assign(goals);
         g.splice(i, 1);
         setGoals(g);
+        forceUpdate();
     };
 
     const addGoal = () => {
@@ -68,15 +78,7 @@ export default function CreatePlanDialog(props) {
         setSelectedEndDate(date);
     }
 
-    const keyPress = (e) => {
-        if (e.keyCode === 13) {
-            console.log('value', e.target.value);
-            addGoal();
-        } else {
-            setGoal(e.target.value)
-        }
-       
-    }
+
 
     return (
         <div>
@@ -90,11 +92,10 @@ export default function CreatePlanDialog(props) {
                     <form className={classes.root} noValidate autoComplete="off">
                         <Grid item>
                             <TextField
-                                required
                                 id="plan-name"
                                 label="Plan Name"
                                 value={name}
-                                onChange={e => { setName(e.value.target) }} />
+                                onChange={e => setName(e.target.value)} />
                         </Grid>
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <Grid container>
@@ -127,13 +128,13 @@ export default function CreatePlanDialog(props) {
                             </Grid>
                         </MuiPickersUtilsProvider>
 
-                        <div component="ul" className={classes.root}>
+                        <div component="ul" className={classes.chipStyle}>
                             {goals.map((data, i) => {
                                 return (
                                     <li key={i}>
                                         <Chip
                                             label={data}
-                                            onDelete={() => handleDelete(data, i)}
+                                            onDelete={handleDelete(data, i)}
                                             className={classes.chip}
                                         />
                                     </li>
@@ -141,14 +142,23 @@ export default function CreatePlanDialog(props) {
                             })}
                         </div>
 
-                        <br />
                         <Grid>
-                            <TextField id="goalTextfield" label="Add Goal" value={goal} onChange={e => keyPress(e)} />
+                            <TextField id="goalTextfield"
+                                label="Add Goal"
+                                value={goal}
+                                onChange={e => setGoal(e.target.value)}
+                                onKeyDown={e => {
+                                    if (e.keyCode === 13 && e.shiftKey === false) {
+                                        addGoal()
+                                    }
+                                }} />
                             <IconButton onClick={() => addGoal()}>
                                 <Add />
                             </IconButton>
                         </Grid>
+
                     </form>
+
                 </DialogContent>
                 <DialogActions>
                     <IconButton onClick={handleClose}>

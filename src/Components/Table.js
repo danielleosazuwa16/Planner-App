@@ -1,7 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-import { mockData } from '../../Data/Data';
 
 const useStyles = makeStyles({
     table: {
@@ -9,25 +8,27 @@ const useStyles = makeStyles({
     }
 });
 
-export default function PlanTable() {
+export default function PlanTable(props) {
     const classes = useStyles();
     return (
-        <TableContainer component={Paper}>
+        <TableContainer>
             <Table className={classes.table}>
                 <TableHead>
                     <TableRow>
-                        {mockData.headers.map(header => (
+                        {props.plan.headers.map(header => (
                             <TableCell key={header} align="center">{header}</TableCell>
                         ))}
                     </TableRow>
                 </TableHead>
 
                 <TableBody>
-                    {mockData.rows.map(row => (
+                    {props.plan.rows.map((row, i)=> (
                         <TableRow key={row.id}>
-                            <TableCell component="th" scope="row" align="center">{row.date.toLocaleDateString()}</TableCell> 
-                            {row.todos.map((v,i) => 
-                                <TableCell key={row.date.toDateString() + i} align="center">{v}</TableCell>
+                            <TableCell component="th" scope="row" align="center">{row.date.toString}</TableCell>
+                            {row.todos.map((v, i) =>
+                                <TableCell key={row.date.toString + i} align="center">
+                                    {(row.completed[i]) ? v.strike() : v}
+                                </TableCell>
                             )}
                         </TableRow>
                     ))}
