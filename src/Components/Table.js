@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
@@ -22,12 +22,16 @@ export default function PlanTable(props) {
                 </TableHead>
 
                 <TableBody>
-                    {props.plan.rows.map((row, i)=> (
+                    {props.plan.rows.map((row, i) => (
                         <TableRow key={row.id}>
                             <TableCell component="th" scope="row" align="center">{row.date.toString}</TableCell>
                             {row.todos.map((v, i) =>
-                                <TableCell key={row.date.toString + i} align="center">
-                                    {(row.completed[i]) ? v.strike() : v}
+                                <TableCell
+                                    key={row.date.toString + i}
+                                    align="center"
+                                    style={{
+                                        textDecoration: row.completed[i] ? 'line-through' : 'none'
+                                    }}> {v}
                                 </TableCell>
                             )}
                         </TableRow>

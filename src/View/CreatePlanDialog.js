@@ -78,8 +78,6 @@ export default function CreatePlanDialog(props) {
         setSelectedEndDate(date);
     }
 
-
-
     return (
         <div>
             <IconButton color="inherit" onClick={handleClickOpen}>

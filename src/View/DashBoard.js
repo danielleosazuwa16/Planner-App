@@ -95,7 +95,7 @@ const useStyles = makeStyles(theme => ({
     left: 0,
     right: 0,
     marginBottom: 20,
-  }, 
+  },
   body: {
     marginButtom: 70
   }
@@ -116,16 +116,16 @@ export default function Dashboard(props) {
       <AppBar>
         <Toolbar>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            My Life Is In Shambles
+            Shambles
           </Typography>
 
-          <div align="right">
-            {/* Create New Plan */}
-            <IconButton color="inherit">
-              <CreatePlanDialog
-                createPlan={props.handleCreatePlan}
-              />
-            </IconButton>
+          <div align="right" style={{
+            display: 'flex',
+            justifyContent: 'space-between'
+          }}>
+            <CreatePlanDialog
+              createPlan={props.handleCreatePlan}
+            />
             {/* Previous Plans */}
             <IconButton color="inherit" onClick={() => setShowPrev(true)}>
               <LibraryBooks />
@@ -149,7 +149,7 @@ export default function Dashboard(props) {
               activePlan={props.activePlan}
               handleAddGoal={props.handleAddGoal}
               handleDeleteGoal={props.handleDeleteGoal}
-              hanldeCompleteGoal={props.hanldeCompleteGoal}
+              handleCompleteGoal={props.handleCompleteGoal}
               editPlan={props.editPlan}
               finishPlan={props.finishPlan}
             />}
@@ -165,6 +165,6 @@ export default function Dashboard(props) {
         </Container>
       </main>
 
-    </div>
+    </div >
   );
 }

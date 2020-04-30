@@ -1,6 +1,6 @@
-import { FormControl, IconButton, Input, InputLabel, MenuItem, Paper, Popover, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
+import { FormControl, IconButton, InputLabel, MenuItem, Paper, Popover, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Add, DeleteOutline, Done, StrikethroughS, SaveAltSharp } from '@material-ui/icons';
+import { Add, DeleteOutline, Done, SaveAltSharp, StrikethroughS } from '@material-ui/icons';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -66,9 +66,18 @@ export default function EditableTable(props) {
     }
 
     //Complete Popover
-    const handleClickCom = (event) => {
+    const [rowIndex, setRowIndex] = React.useState(0);
+    const [toDoIndex, setTodoIndex] = React.useState(0);
 
+    const handleClickCom = (event) => {
+        props.handleCompleteGoal(rowIndex, toDoIndex)
     };
+
+    const clickedText = (rowIndex, toDoIndex) => {
+        setRowIndex(rowIndex);
+        setTodoIndex(toDoIndex);
+        console.log(rowIndex + " " + toDoIndex)
+    }
 
     return (
         <div>
@@ -166,12 +175,16 @@ export default function EditableTable(props) {
                                 <TableCell component="th" scope="row" align="center">{row.date.toString}</TableCell>
                                 {row.todos.map((v, i) =>
                                     <TableCell key={row.date.toString + i} align="center">
-                                        <Input
-                                            disableUnderline={true}
+                                        <input
                                             className={classes.textField}
-                                            align="center"
-                                            value={(row.completed[i]) ? v.strike() : v}
+                                            value={v}
                                             onChange={e => props.editPlan(e.target.value, rowIndex, i)}
+                                            onFocus={() => clickedText(rowIndex, i)}
+                                            style={{
+                                                textAlign: "center", border: "none",
+                                                textDecoration: row.completed[i] ? 'line-through' : 'none'
+                                            }}
+                                            disabled={(row.completed[i] ? true: false)}
                                         />
                                     </TableCell>
                                 )}

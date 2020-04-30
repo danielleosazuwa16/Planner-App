@@ -17,7 +17,7 @@ function TabPanel(props) {
         >
             {value === index && (
                 <Box p={3}>
-                    <Typography>{children}</Typography>
+                    <Typography component={'span'}>{children}</Typography>
                 </Box>
             )}
         </div>
@@ -58,7 +58,6 @@ export default function PreviousPlans(props) {
 
     return (
         <Container className={classes.root}>
-            {console.log(props.previousPlans)}
             <Tabs
                 orientation="vertical"
                 variant="scrollable"
@@ -73,7 +72,7 @@ export default function PreviousPlans(props) {
             </Tabs>
 
             {props.previousPlans.map((p, i) =>
-                <TabPanel value={value} index={i}>
+                <TabPanel key={i} value={value} index={i}>
                     <Table 
                         plan={props.previousPlans[i]}
                     />

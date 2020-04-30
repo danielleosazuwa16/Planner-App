@@ -1,7 +1,7 @@
 import { Container } from '@material-ui/core';
 import React from 'react';
 import './App.css';
-import { createPlan, getRow, mockData, mock1Data, mock2Data, Plan, Row } from './Data/Data';
+import { createPlan, getRow, mockData, Plan, Row } from './Data/Data';
 import Dashboard from './View/DashBoard';
 
 export default class App extends React.Component {
@@ -10,7 +10,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       user: "Danielle Osazuwa",
-      previousPlans: [mockData, mock1Data, mock2Data],
+      previousPlans: [mockData],
       activePlan: mockData
     };
 
@@ -56,17 +56,17 @@ export default class App extends React.Component {
     console.log(newPlan)
     for (i = 0; i < newPlan.headers.length; i++) {
       if (newPlan.headers[i] === goal) {
-        newPlan.headers.splice(i,1);
+        newPlan.headers.splice(i, 1);
         break;
       }
     }
-   
+
     for (let j = 0; j < newPlan.rows.length; j++) {
       newPlan.rows[j].completed.splice(i, 1);
       newPlan.rows[j].todos.splice(i, 1);
     }
 
-    
+
 
     this.setState({ activePlan: newPlan });
     this.storeSession();
@@ -84,16 +84,9 @@ export default class App extends React.Component {
     this.storeSession();
   }
 
-  handleCompleteGoal = (id: string, todo: String) => {
-    let i, newPlan: Plan = JSON.parse(JSON.stringify(this.state.activePlan)),
-      row = getRow(id, newPlan);
-
-    for (i = 0; i < row.todos.length; i++) {
-      if (row.todos[i] === todo) {
-        row.completed[i] = true;
-        break;
-      }
-    }
+  handleCompleteGoal = (rowIndex, toDoIndex) => {
+    let newPlan: Plan = JSON.parse(JSON.stringify(this.state.activePlan));
+    newPlan.rows[rowIndex].completed[toDoIndex] = true;
 
     this.setState({ activePlan: newPlan });
     this.storeSession();
@@ -113,7 +106,6 @@ export default class App extends React.Component {
   editPlan = (text, rowIndex, index) => {
     const newPlan: Plan = JSON.parse(JSON.stringify(this.state.activePlan));
     newPlan.rows[rowIndex].todos[index] = text;
-    console.log(newPlan.rows[rowIndex].todos[index]);
     this.setState({ activePlan: newPlan });
     this.storeSession();
   }
@@ -138,7 +130,6 @@ export default class App extends React.Component {
             plan={this.state.activePlan}
             handleAddGoal={this.handleAddGoal}
             handleDeleteGoal={this.handleDeleteGoal}
-            handleCompleteDay={this.handleCompleteDay}
             handleCompleteGoal={this.handleCompleteGoal}
             handleCreatePlan={this.handleCreatePlan}
             editPlan={this.editPlan}
